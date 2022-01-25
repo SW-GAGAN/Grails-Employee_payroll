@@ -1,5 +1,3 @@
-
-<!-- Include Home Page Layout -->
 <meta name="layout" content="main"/>
 
 <div class="main-content">
@@ -9,12 +7,10 @@
             <div class="emp-count">10</div>
         </div>
         <g:link controller="employee" action="create" class="add-button">
-            <g:img dir="../assets/images/icons/" file="add-24px.svg" alt=""/>
+            <g:img dir="../assets/icons/" file="add-24px.svg" alt=""/>
             <g:message code="add.user"/>
         </g:link>
     </div>
-
-
 
     <div class="table-main">
         <table id="table-display" class="table">
@@ -35,8 +31,8 @@
                 <td>
                     <g:img class="profile" dir="../assets/profile-images/" file="Ellipse%20-1.png" alt="Profile"/>
                 </td>
-                <td>Roshni Mali</td>
-                <td>Female</td>
+                <td>ROSHNI MALI</td>
+                <td>female</td>
                 <td><div class="dept-label">Finance</div>
                 <td>&#8377; 1200000</td>
                 <td>21 Aug 2020</td>
@@ -48,7 +44,7 @@
                            file="create-black-18dp.svg" alt="edit" />
                 </td>
             </tr>
+
         </table>
     </div>
 </div>
-

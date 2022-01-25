@@ -4,7 +4,7 @@
     <div class="header-content">
         <div class="emp-detail-text">
             Employee Details
-            <div class="emp-count">10</div>
+            <div class="emp-count">${employeeList.size()}</div>
         </div>
         <g:link controller="employee" action="create" class="add-button">
             <g:img dir="../assets/icons/" file="add-24px.svg" alt=""/>
@@ -27,24 +27,32 @@
             </tr>
 
             <!-- Employee Details in Table Rows -->
-            <tr>
-                <td>
-                    <g:img class="profile" dir="../assets/profile-images/" file="Ellipse%20-1.png" alt="Profile"/>
-                </td>
-                <td>ROSHNI MALI</td>
-                <td>female</td>
-                <td><div class="dept-label">Finance</div>
-                <td>&#8377; 1200000</td>
-                <td>21 Aug 2020</td>
-                <!--To update and delete an employee from the database-->
-                <td>
-                    <g:img (click)="remove(employee.id)" dir="../assets/icons/"
-                           file="delete-black-18dp.svg" alt="delete" />
-                    <g:img (click)="update(employee)" dir="../assets/icons/"
-                           file="create-black-18dp.svg" alt="edit" />
-                </td>
-            </tr>
+            <g:each in="${employeeList}" var="info">
+                <tr>
+                    <td><g:img class="profile" uri="${info.profilePic}" alt="Profile"/></td>
+                    <td>${info.name}</td>
+                    <td>${info.gender}</td>
+                    <td>
+                        <g:each in="${info.department}" var="i">
+                            <div class="dept-label">${i}</div>
+                        </g:each>
+                    </td>
+                    <td>&#8377; ${info.salary}</td>
+                    <td>${info.startDate}</td>
 
+                    <!--To update and delete an employee from the database-->
+                    <td>
+                        <g:link controller="employee" action="delete" id="${info.id}">
+                            <g:img dir="../assets/icons/"
+                                   file="delete-black-18dp.svg" alt="delete" />
+                        </g:link>
+                        <g:link controller="employee" action="edit" id="${info.id}">
+                            <g:img (click)="update(employee)" dir="../assets/icons/"
+                                   file="create-black-18dp.svg" alt="edit" />
+                        </g:link>
+                    </td>
+                </tr>
+            </g:each>
         </table>
     </div>
 </div>

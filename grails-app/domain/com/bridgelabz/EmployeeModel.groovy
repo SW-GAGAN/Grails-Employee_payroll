@@ -26,4 +26,9 @@ class EmployeeModel {
         note blank: false
 
     }
+
+    @Override
+    String toString() {
+        return super.toString()
+    }
 }

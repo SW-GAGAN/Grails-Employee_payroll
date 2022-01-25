@@ -1,19 +1,16 @@
 package com.bridgelabz
 
 import grails.web.servlet.mvc.GrailsParameterMap
+import org.springframework.validation.BindingResult
 
 class EmployeeService {
 
-    /**
-     * Purpose : To save the employee if data is valid and if it has no errors with the help of flush
-     * if flush is true then it allows ORM to save the employee data
-     *
-     * @param params
-     * @return response
-     */
+
+     //  To save the employee if data is valid and if it has no errors with the help of flush
+
     def save(GrailsParameterMap params) {
         EmployeeModel employee = new EmployeeModel(params)
-        def response = AppUtil.saveResponse(false, member)
+        def response = AppUtil.saveResponse(false, employee)
         if (employee.validate()) {
             employee.save(flush: true)
             if (!employee.hasErrors()) {
@@ -23,15 +20,11 @@ class EmployeeService {
         return response
     }
 
-    /**
-     * Purpose : To list all the data of the employee in the employee payroll
-     * and want to show list to the frontend (pagination)
-     * @param params
-     * @return
-     */
+    // To list all the data of the employee in the employee payroll and (pagination)
+
     def list(GrailsParameterMap params) {
         params.max = params.max ?: GlobalConfig.itemsPerPage()
-        List<EmployeeModel> employeeList = Employee.createCriteria().list(params) {
+        List<EmployeeModel> employeeList = EmployeeModel.createCriteria().list(params) {
             if (params?.colName && params?.colValue) {
                 like(params.colName, "%" + params.colValue + "%")
             }
@@ -39,6 +32,39 @@ class EmployeeService {
                 order("id", "desc")
             }
         } as List<EmployeeModel>
-        return [list: employeeList, count: employeeList.count()]
+        return [list: employeeList, count: EmployeeModel.count()]
+    }
+
+    // To save updated data of employee in database
+
+       def update(EmployeeModel employee, GrailsParameterMap params) {
+        employee.properties = params as BindingResult
+        def response = AppUtil.saveResponse(false, employee)
+        if (employee.validate()) {
+            employee.save(flush: true)
+            if (!employee.hasErrors()) {
+                response.isSuccess = true
+            }
+        }
+        return response
+    }
+
+
+    // To get data of employee with particular ID
+
+    def getById(Serializable id) {
+        return EmployeeModel.get(id)
+    }
+
+    // To delete data of employee from the database of employee payroll app
+
+      def delete(EmployeeModel employee) {
+        try {
+            employee.delete(flush: true)
+        } catch (Exception e) {
+            println(e.getMessage())
+            return false
+        }
+        return true
     }
 }
